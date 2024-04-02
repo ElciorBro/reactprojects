@@ -9,9 +9,9 @@
     border: 1px solid #ccc;
     box-sizing: border-box;
     margin-top: 10px;
-    transition: border-color 0.3s;
+    transition: border 0.3s;
 }
 
 .content input:focus {
-    border-color: lightblue;
+    border:2px solid lightblue;
   }

@@ -6,7 +6,11 @@
 }
 
 body {
-  background-color: #474747;
+  background-color: #717171;
+}
+
+button {
+  margin: 10px;
 }
 
 .title {
@@ -20,6 +24,25 @@ body {
   padding: 10px 0;
 }
 
-.taskInput {
 
+
+.taskContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px;
+  margin-bottom: 5px;
+  border: 1px solid #4fc2d6;
+  background-color: #4d4d4d;
+  border-radius: 5px;
+}
+
+.taskText {
+  margin: 5px 10px 5px 2px;
+  color: #ffffff;
+}
+
+.taskCheckbox {
+  width: 20px;
+  height: 20px;
 }
