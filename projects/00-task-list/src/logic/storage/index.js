@@ -1,9 +1,9 @@
-export const saveList = (taskList) => {
+export const saveListInStorage = (taskList) => {
     window.localStorage.setItem('taskList', JSON.stringify(taskList))
 }
 
 
-export const resetList = () => {
+export const resetListFromStorage = () => {
     window.localStorage.removeItem('taskList')
 }
 
@@ -15,6 +15,15 @@ export const removeItems = (indexes) => {
         indexes.map((index) => {
             savedTaskList.splice(index, 1)
         })
-        saveList(savedTaskList)
+        saveListInStorage(savedTaskList)
     }
+}
+
+export const removeTaskFromStorage = (indexList) => {
+    const taskListFromStorage = window.localStorage.getItem('taskList')
+    const savedTaskList = JSON.parse(taskListFromStorage)
+    indexList.map((idx) => {
+        savedTaskList.splice(idx, 1)
+    })
+    saveListInStorage(savedTaskList)
 }
