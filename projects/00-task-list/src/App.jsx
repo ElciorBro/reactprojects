@@ -71,7 +71,7 @@ function App() {
   return (
     <>
       <main>
-        <h1 className='title'>TASK LIST</h1>
+        <h1 className='title'>Gestion de Tareas</h1>
         <div className="taskInput">
           <AddTask handleTask={handleTask}/>
         </div>

@@ -46,3 +46,23 @@ button {
   width: 20px;
   height: 20px;
 }
+
+/* Label Stiles */
+
+label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+label .taskText {
+  margin-left: 10px;
+  color: #ffffff;
+}
+
+label .taskCheckbox {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
