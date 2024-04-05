@@ -30,11 +30,19 @@ export const SquareOp = ( { children, handleScreen }) => {
   )
 }
 
-export const SquareBig = ({ children }) => {
+export const SquareBig = ({ children, handleScreen, handleEqual }) => {
 
   const handleClick = () => {
-    console.log("has presionado", children)
+    if (children === 0) {
+      handleScreen(children)
+    }
+
+    if (children === '=') {
+      handleEqual(children)
+    }
   }
+  
+  console.log("haz presionado", children)
 
   return (
     <div onClick={handleClick} className="bigSquare">

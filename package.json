@@ -4,5 +4,8 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/esLintrc.json"
+  },
+  "dependencies": {
+    "mathjs": "^12.4.1"
   }
 }

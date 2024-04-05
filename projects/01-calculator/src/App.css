@@ -7,9 +7,7 @@
 
 
 .calculator {
-  /* display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px; */
+  max-width: 500px;
   padding: 20px;
   background-color: #f0f0f0;
   border-radius: 10px;
@@ -18,12 +16,31 @@
 
 .screenResult {
   grid-column: span 4;
-  text-align: right;
+  text-align: left;
   background-color: #fff;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
+}
+
+.screenOp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.subtle-red {
+  color: red; 
+}
+
+.preResult {
+  width: 100%;
+  border-top: 1px solid #272727;
+  padding-top: 10px;
+  color: #616161;
+  font-weight: bold;
 }
 
 .result {

@@ -4,13 +4,37 @@ import { SquareNum, SquareOp, SquareBig } from './component/Squares'
 import { useState } from 'react'
 
 function App() {
-  const [screen, setScreen] = useState(0)
+  const [screen, setScreen] = useState('0')
+  const [preResult, setPreResult] = useState('0')
+  // const [historyOperation, setHistoryOperation] = useState([])
+
+
+  const modifyPreResult = (ch, stringToEval) => {
+    const operation = stringToEval + ch.toString()
+
+    try {
+        const result = eval(operation)
+        return result
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  const handleEqual = () => {
+    const newScreen = preResult
+    setPreResult('0')
+    setScreen(newScreen)
+  }
 
   const handleScreen = (ch) => {
 
     setScreen((prevScreen) => {
-      return prevScreen == 0 && prevScreen.length < 2 ? ch : prevScreen.toString() + ch.toString();
+      const newScreen = prevScreen === '0' ? ch.toString() : prevScreen + ch.toString()
+      return newScreen;
     });
+    const newPreResult = modifyPreResult(ch, screen)
+    setPreResult(newPreResult)
+
   };
 
   return (
@@ -19,8 +43,11 @@ function App() {
         <h1>React Calculator</h1>
         <div className="calculator">
           <div className="screenResult">
-            <h2 className='result'><strong>{screen}</strong></h2>
-            <p className="subtle-red">{INITIAL_CLEAR[1]}</p>
+            <div className="screenOp">
+              <p className='result'><strong>{screen}</strong></p>
+              <div className="subtle-red">{INITIAL_CLEAR[1]}</div>
+            </div>
+            <div className="preResult">{preResult}</div>
           </div>
           <div className="keyboard">
             <SquareBig>{INITIAL_CLEAR[0]}</SquareBig>
@@ -38,7 +65,7 @@ function App() {
             }
             {
               INITIAL_BIG.map((op, index) => (
-                <SquareBig key={index} >{op}</SquareBig>
+                <SquareBig key={index} handleScreen={handleScreen} handleEqual={handleEqual}>{op}</SquareBig>
               ))
             }
           </div>
