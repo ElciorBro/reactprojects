@@ -55,7 +55,7 @@
   grid-template-rows: repeat(5, 1fr);
 }
 
-.number, .operator, .bigSquare {
+.number, .operator, .bigSquare, .normalSquare {
   background-color: #4CAF50;
   color: #fff;
   font-size: 30px;
@@ -85,5 +85,20 @@
 .bigSquare {
   grid-column: span 2;
   grid-row: span 1;
+}
+
+
+.historyContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.historyOp {
+  font-weight: bold;
 }
 
