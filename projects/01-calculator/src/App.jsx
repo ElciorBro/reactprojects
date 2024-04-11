@@ -3,38 +3,25 @@ import { INITIAL_NUMBERS, INITIAL_OPERATIONS, INITIAL_BIG, INITIAL_CLEAR } from 
 import { SquareNum, SquareOp, SquareBig } from './component/Squares'
 import { useState } from 'react'
 import { History } from './component/History'
+import { calculateString } from './logic/stringTransform'
 
 function App() {
   const [screen, setScreen] = useState('0')
   const [preResult, setPreResult] = useState('0')
   const [historyOperation, setHistoryOperation] = useState([])
-  // const [historyAnwser ,setHistoryAnwser] = useState([])
 
-  console.log(historyOperation[0], historyOperation[1])
-
-
-  const modifyPreResult = (ch, stringToEval) => {
-    const operation = stringToEval + ch.toString()
-
-    try {
-        const result = eval(operation)
-        return result
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
 
   const handleDelete = () => {
-    
-    setScreen((prevState) => {
-      if (prevState.length === 1) {
-        const newString = '0'
-        return newString
-      } else if (prevState !== 0) {
-        const newString = screen.slice(0, -1)
-        return newString
-      } else return
-    })
+
+    if (preResult.length === 1) {
+      setScreen('0')
+      setPreResult('0')
+    } else if (preResult !== 0) {
+      const newString = screen.slice(0 ,-1)
+      setScreen(newString)
+      setPreResult(calculateString(newString))
+    }
+
   }
 
   const handleClear = () => {
@@ -50,13 +37,20 @@ function App() {
   }
 
   const handleScreen = (ch) => {
+    if (ch === '.') {
+      const newScreen = screen + ch
+      setScreen(newScreen)
+    } else if(screen === '0') {
+      setScreen(ch.toString())
+      setPreResult(ch.toString())
+    } else {
+      const newScreen = screen + ch.toString()
+      setScreen(newScreen);
+      setPreResult(calculateString(newScreen))
+    }
 
-    setScreen((prevScreen) => {
-      const newScreen = prevScreen === '0' && ch !== '.' ? ch.toString() : prevScreen + ch.toString()
-      return newScreen;
-    });
-    const newPreResult = modifyPreResult(ch, screen)
-    setPreResult(newPreResult)
+
+
 
   };
 
