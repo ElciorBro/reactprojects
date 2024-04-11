@@ -11,6 +11,12 @@ function App() {
   const [historyOperation, setHistoryOperation] = useState([])
 
 
+  const handleKeyDelete = (event) => {
+    if (event.key === 'Backspace') {
+      handleDelete()
+    }
+  }
+
   const handleDelete = () => {
 
     if (preResult.length === 1) {
@@ -49,7 +55,7 @@ function App() {
       setPreResult(calculateString(newScreen))
     }
 
-
+    document.addEventListener('keyup', handleKeyDelete)
 
 
   };
