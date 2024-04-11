@@ -4,11 +4,24 @@ import { SquareNum, SquareOp, SquareBig } from './component/Squares'
 import { useState } from 'react'
 import { History } from './component/History'
 import { calculateString } from './logic/stringTransform'
+import { saveScreenInStorage, saveOperationListInStorage, savePreResultInStorage, resetScreenInStorageFromStorage, resetOperationListFromStorage, resetPreResultInStorageFromStorage } from './logic/saveOperation'
 
 function App() {
-  const [screen, setScreen] = useState('0')
-  const [preResult, setPreResult] = useState('0')
-  const [historyOperation, setHistoryOperation] = useState([])
+  const [screen, setScreen] = useState(() => {
+    const screenFromStorage = window.localStorage.getItem('screen')
+    if (screenFromStorage) return JSON.parse(screenFromStorage)
+    return '0'
+  })
+  const [preResult, setPreResult] = useState(() => {
+    const preResultFromStorage = window.localStorage.getItem('screen')
+    if (preResultFromStorage) return JSON.parse(preResultFromStorage)
+    return '0'
+  })
+  const [historyOperation, setHistoryOperation] = useState(() => {
+    const historyListFromStorage = window.localStorage.getItem('historyList')
+    if (historyListFromStorage) return JSON.parse(historyListFromStorage)
+    return []
+  })
 
 
   const handleKeyDelete = (event) => {
@@ -22,10 +35,14 @@ function App() {
     if (preResult.length === 1) {
       setScreen('0')
       setPreResult('0')
+      resetScreenInStorageFromStorage()
+      resetPreResultInStorageFromStorage()
     } else if (preResult !== 0) {
       const newString = screen.slice(0 ,-1)
       setScreen(newString)
       setPreResult(calculateString(newString))
+      saveScreenInStorage(newString)
+      savePreResultInStorage(calculateString(newString))
     }
 
   }
@@ -33,43 +50,61 @@ function App() {
   const handleClear = () => {
     setScreen('0')
     setPreResult('0')
+    resetScreenInStorageFromStorage()
+    resetPreResultInStorageFromStorage()
   }
 
   const handleEqual = () => {
     const newScreen = preResult
-    setHistoryOperation([...historyOperation, screen + ' = ' + preResult])
+    const historyOp = [...historyOperation, screen + ' = ' + preResult]
+    setHistoryOperation(historyOp)
+    saveOperationListInStorage(historyOp)
     setPreResult('0')
+    resetPreResultInStorageFromStorage()
     setScreen(newScreen)
+    saveScreenInStorage(newScreen)
   }
 
   const handleScreen = (ch) => {
     if (ch === '.') {
       const newScreen = screen + ch
       setScreen(newScreen)
+      saveScreenInStorage(newScreen)
     } else if(screen === '0') {
       setScreen(ch.toString())
+      saveScreenInStorage(ch.toString())
       setPreResult(ch.toString())
+      savePreResultInStorage(ch.toString())
     } else {
       const newScreen = screen + ch.toString()
       setScreen(newScreen);
+      saveScreenInStorage(newScreen)
       setPreResult(calculateString(newScreen))
+      savePreResultInStorage(newScreen)
+
     }
 
-    document.addEventListener('keyup', handleKeyDelete)
-
-
   };
+
+  const toggleResetHistory = () => {
+    resetOperationListFromStorage();
+    setHistoryOperation([])
+  }
+
+  
+  document.addEventListener('keyup', handleKeyDelete)
 
   return (
     <>
       <main>
-        <h1>React Calculator</h1>
+        <h1>Calculadora Funcional</h1>
+        <p><strong>Bienvenido a mi Calculadora, disfruta haciendo y guardando todos tus calculos!</strong></p>
         <div className="calculator">
           <div className="screenResult">
             <div className="screenOp">
               <p className='result'><strong>{screen}</strong></p>
               <div className="subtle-red">
-                <button onClick={handleDelete}>
+                <button className='deleteButton' onClick={handleDelete}>
                   {INITIAL_CLEAR[1]}
                 </button>
               </div>
@@ -103,8 +138,12 @@ function App() {
             {historyOperation.map((hist, index) => {
               return <History key={index} operation={hist}/>
             })}
-            
           </div>
+          {historyOperation.length > 0 && (
+            <>
+              <button onClick={toggleResetHistory} className="resetHistory">Borrar Historial de Calculo</button>
+            </>
+          )}
         </div>
       </main>
     </>
