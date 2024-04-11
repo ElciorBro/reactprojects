@@ -133,7 +133,11 @@ function App() {
           </div>
         </div>
         <div className="history">
-          <h3><strong>Historial de Operaciones</strong></h3>
+        {historyOperation.length > 0 && (
+          <>
+            <h3><strong>Historial de Operaciones</strong></h3>
+          </>
+          )}
           <div className="historyList">
             {historyOperation.map((hist, index) => {
               return <History key={index} operation={hist}/>
