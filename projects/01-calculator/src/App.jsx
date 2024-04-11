@@ -71,6 +71,7 @@ function App() {
   }
 
   const handleScreen = (ch) => {
+
     // Logica de inputs
     if (ch === '.') { //Logica si el usuario ingresa un decimal
       const newScreen = screen + ch
@@ -89,7 +90,7 @@ function App() {
       saveScreenInStorage(newScreen)
       setPreResult(calculateString(newScreen))
       savePreResultInStorage(newScreen)
-    } else { // logica para que no se borre el preResult
+    } else if (isNaN(ch) && !isNaN(screen.charAt(screen.length - 1))) {
       const newScreen = screen + ch.toString()
       setScreen(newScreen);
       saveScreenInStorage(newScreen)
@@ -104,7 +105,7 @@ function App() {
     setHistoryOperation([])
   }
 
-  
+  console.log(historyOperation)
   document.addEventListener('keyup', handleKeyDelete)
 
   return (
