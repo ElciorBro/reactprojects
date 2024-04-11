@@ -134,3 +134,12 @@
 .resetHistory:hover {
   background-color: #d32f2f;
 }
+
+@media only screen and (max-width: 600px) {
+  .number,
+  .operator,
+  .bigSquare,
+  .normalSquare {
+    font-size: 18px;
+  }
+}

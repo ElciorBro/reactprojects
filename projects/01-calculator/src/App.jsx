@@ -32,12 +32,17 @@ function App() {
 
   const handleDelete = () => {
 
-    if (preResult.length === 1) {
+    if (screen.length === 1) {
       setScreen('0')
       setPreResult('0')
       resetScreenInStorageFromStorage()
       resetPreResultInStorageFromStorage()
-    } else if (preResult !== 0) {
+    } else if (preResult === '0' && screen !== 0) {
+      setScreen('0')
+      setPreResult('0')
+      saveScreenInStorage('0')
+      savePreResultInStorage('0')
+    } else  {
       const newString = screen.slice(0 ,-1)
       setScreen(newString)
       setPreResult(calculateString(newString))
@@ -59,29 +64,37 @@ function App() {
     const historyOp = [...historyOperation, screen + ' = ' + preResult]
     setHistoryOperation(historyOp)
     saveOperationListInStorage(historyOp)
-    setPreResult('0')
-    resetPreResultInStorageFromStorage()
     setScreen(newScreen)
     saveScreenInStorage(newScreen)
+    setPreResult('0')
+    savePreResultInStorage('0')
   }
 
   const handleScreen = (ch) => {
-    if (ch === '.') {
+    // Logica de inputs
+    if (ch === '.') { //Logica si el usuario ingresa un decimal
       const newScreen = screen + ch
       setScreen(newScreen)
       saveScreenInStorage(newScreen)
-    } else if(screen === '0') {
+
+    } else if(screen === '0' && !isNaN(ch)) { //Logica si tenemos un 0 inicial
       setScreen(ch.toString())
       saveScreenInStorage(ch.toString())
       setPreResult(ch.toString())
       savePreResultInStorage(ch.toString())
-    } else {
+
+    } else if(!isNaN(ch)) { // Logica para concatenar numeros
       const newScreen = screen + ch.toString()
       setScreen(newScreen);
       saveScreenInStorage(newScreen)
       setPreResult(calculateString(newScreen))
       savePreResultInStorage(newScreen)
-
+    } else { // logica para que no se borre el preResult
+      const newScreen = screen + ch.toString()
+      setScreen(newScreen);
+      saveScreenInStorage(newScreen)
+      setPreResult(calculateString(newScreen))
+      savePreResultInStorage(newScreen)
     }
 
   };

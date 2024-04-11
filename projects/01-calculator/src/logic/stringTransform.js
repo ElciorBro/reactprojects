@@ -19,6 +19,7 @@ export const calculateString = (operation) => {
   } catch (error) {
     console.log('Error al calcular:');
     console.log(error);
-    return false;
+    const result = eval(operation.slice(0, -1))
+    return result;
   }
 };
